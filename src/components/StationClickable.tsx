@@ -16,9 +16,20 @@ const clickableAreaStyle: CSS.Properties = {
   paddingBottom: "15px",
 };
 
+const highlightedImgStyle: CSS.Properties = {
+  height: "80px",
+  borderRadius: "50%",
+  border:"solid white 1px"
+};
+
+const highlightedDisplayStyle : CSS.Properties = {
+    paddingTop : "7px"
+}
+
 interface IStationClickable {
   station: RadioStation;
   upDateNowPlaying: (station: RadioStation) => void;
+  nowPlaying: RadioStation | undefined
 }
 
 const StationClickable: React.FC<IStationClickable> = (props) => {
@@ -26,8 +37,21 @@ const StationClickable: React.FC<IStationClickable> = (props) => {
     props.upDateNowPlaying(station);
   };
 
+  let highlightedDisplay = props.nowPlaying && props.station.name === props.nowPlaying.name ? (
+    <div style={highlightedDisplayStyle}>
+      <img
+        style={highlightedImgStyle}
+        src={props.station.image}
+        alt={props.station.name}
+      />
+    </div>
+  ) : (
+    <></>
+  );
+
   return (
     <div style={stationClickableStyle}>
+      {highlightedDisplay}
       <div
         onClick={() => clickHandler(props.station)}
         style={clickableAreaStyle}

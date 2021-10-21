@@ -18,7 +18,7 @@ const radioStyles: CSS.Properties = {
   justifyContent: "space-between",
   width: "300px",
   height: "400px",
-  boxShadow: "0px 5px 10px black",
+  boxShadow: "0px 5px 30px black",
   overflow: "hidden",
 };
 
@@ -28,6 +28,7 @@ const headStyle: CSS.Properties = {
 };
 
 const footStyle: CSS.Properties = {
+  backgroundColor: "rgb(42,42,63)",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -46,6 +47,9 @@ const Radio: React.FC = () => {
       .get<IResponseData>("https://teclead.de/recruiting/radios")
       .then((response) => {
         let radios = response.data.radios;
+        for(let radio of radios){
+            radio.image = `https://dummyimage.com/400x400/3d43ff/ffffff&text=${radio.name}`
+        }
         setStations(radios);
       });
   });
@@ -55,7 +59,7 @@ const Radio: React.FC = () => {
     setNowPlaying(station);
   };
   let hasLoaded = stations ? (
-    <StationsDisplay upDateNowPlaying={upDateNowPlaying} stations={stations} />
+    <StationsDisplay nowPlaying={nowPlaying} upDateNowPlaying={upDateNowPlaying} stations={stations} />
   ) : (
     <></>
   );
