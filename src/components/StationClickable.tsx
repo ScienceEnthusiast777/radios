@@ -18,15 +18,20 @@ const clickableAreaStyle: CSS.Properties = {
 
 interface IStationClickable {
   station: RadioStation;
-  // clickAction : (args:any[])=>void
+  upDateNowPlaying: (station: RadioStation) => void;
 }
 
 const StationClickable: React.FC<IStationClickable> = (props) => {
-  const clickHandler = (name:string) => {console.log(name)};
+  const clickHandler = (station: RadioStation) => {
+    props.upDateNowPlaying(station);
+  };
 
   return (
     <div style={stationClickableStyle}>
-      <div onClick={()=>clickHandler(props.station.name)} style={clickableAreaStyle}>
+      <div
+        onClick={() => clickHandler(props.station)}
+        style={clickableAreaStyle}
+      >
         <div>{props.station.name}</div>
         <div>{props.station.frequency}</div>
       </div>

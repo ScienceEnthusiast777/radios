@@ -24,12 +24,20 @@ const radioStyles: CSS.Properties = {
 
 const headStyle: CSS.Properties = {
   backgroundColor: "rgb(258,178,102)",
-  height:"15%"
+  height: "15%",
 };
 
 const footStyle: CSS.Properties = {
-    height:"15%",
-    borderTop:"solid grey 1px"
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  height: "15%",
+  borderTop: "solid grey 1px",
+};
+
+const nowPlayingTextStyle: CSS.Properties ={
+    fontSize:"0.5em",
+    color:"rgb(258,178,102)"
 }
 
 const Radio: React.FC = () => {
@@ -42,7 +50,23 @@ const Radio: React.FC = () => {
       });
   });
   const [stations, setStations] = useState<Array<RadioStation>>();
-  let hasLoaded = stations ? <StationsDisplay stations={stations} /> : <></>;
+  const [nowPlaying, setNowPlaying] = useState<RadioStation>();
+  const upDateNowPlaying = (station: RadioStation) => {
+    setNowPlaying(station);
+  };
+  let hasLoaded = stations ? (
+    <StationsDisplay upDateNowPlaying={upDateNowPlaying} stations={stations} />
+  ) : (
+    <></>
+  );
+  let nowPlayingDisplay = nowPlaying ? (
+    <>
+      <div style={nowPlayingTextStyle}>CURRENTLY PLAYING</div>
+      <div>{nowPlaying.name}</div>
+    </>
+  ) : (
+    <div></div>
+  );
 
   return (
     <div style={radioStyles}>
@@ -50,9 +74,7 @@ const Radio: React.FC = () => {
         <h3>Stations</h3>
       </div>
       {hasLoaded}
-      <div style={footStyle}>
-
-      </div>
+      <div style={footStyle}>{nowPlayingDisplay}</div>
     </div>
   );
 };
