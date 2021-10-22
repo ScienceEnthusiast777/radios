@@ -5,6 +5,6 @@ export type RadioStation = {
   };
 
   export type LookUp = {
-    [key:string]:string
+    [key:string]:any
   }
   

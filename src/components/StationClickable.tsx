@@ -1,5 +1,6 @@
 import React from "react";
 import { RadioStation } from "../types/types";
+import IconClickable from "./IconClickable";
 import CSS from "csstype";
 
 const stationClickableStyle: CSS.Properties = {
@@ -19,17 +20,21 @@ const clickableAreaStyle: CSS.Properties = {
 const highlightedImgStyle: CSS.Properties = {
   height: "80px",
   borderRadius: "50%",
-  border:"solid white 1px"
+  border: "solid white 1px",
 };
 
-const highlightedDisplayStyle : CSS.Properties = {
-    paddingTop : "7px"
-}
+const highlightedDisplayStyle: CSS.Properties = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-around",
+  alignItems: "center",
+  paddingTop: "7px",
+};
 
 interface IStationClickable {
   station: RadioStation;
   upDateNowPlaying: (station: RadioStation) => void;
-  nowPlaying: RadioStation | undefined
+  nowPlaying: RadioStation | undefined;
 }
 
 const StationClickable: React.FC<IStationClickable> = (props) => {
@@ -37,17 +42,20 @@ const StationClickable: React.FC<IStationClickable> = (props) => {
     props.upDateNowPlaying(station);
   };
 
-  let highlightedDisplay = props.nowPlaying && props.station.name === props.nowPlaying.name ? (
-    <div style={highlightedDisplayStyle}>
-      <img
-        style={highlightedImgStyle}
-        src={props.station.image}
-        alt={props.station.name}
-      />
-    </div>
-  ) : (
-    <></>
-  );
+  let highlightedDisplay =
+    props.nowPlaying && props.station.name === props.nowPlaying.name ? (
+      <div style={highlightedDisplayStyle}>
+        <IconClickable icon="back" />
+        <img
+          style={highlightedImgStyle}
+          src={props.station.image}
+          alt={props.station.name}
+        />
+        <IconClickable icon="forward" />
+      </div>
+    ) : (
+      <></>
+    );
 
   return (
     <div style={stationClickableStyle}>

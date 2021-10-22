@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { RadioStation, LookUp } from "../types/types";
 import StationsDisplay from "./StationsDisplay";
+import IconClickable from "./IconClickable";
 import axios from "axios";
+import useScript from "../hooks/useScript";
 import CSS from "csstype";
 
 interface IResponseData {
@@ -23,6 +25,10 @@ const radioStyles: CSS.Properties = {
 };
 
 const headStyle: CSS.Properties = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-around",
+  alignItems: "center",
   backgroundColor: "rgb(258,178,102)",
   height: "15%",
 };
@@ -41,9 +47,7 @@ const nowPlayingTextStyle: CSS.Properties = {
   color: "rgb(258,178,102)",
 };
 
-
-
-const dummyColors : LookUp = {
+const dummyColors: LookUp = {
   "Radio 1": "91bd0f",
   "Radio 2": "0f6fbd",
   "Radio 3": "bd0f32",
@@ -51,13 +55,16 @@ const dummyColors : LookUp = {
 };
 
 const Radio: React.FC = () => {
+  useScript("https://kit.fontawesome.com/ddeb8cf297.js");
   useEffect(() => {
     axios
       .get<IResponseData>("https://teclead.de/recruiting/radios")
       .then((response) => {
         let radios = response.data.radios;
         for (let radio of radios) {
-          radio.image = `https://dummyimage.com/400x400/${dummyColors[radio.name]}/ffffff&text=${radio.name}`;
+          radio.image = `https://dummyimage.com/400x400/${
+            dummyColors[radio.name]
+          }/ffffff&text=${radio.name}`;
         }
         setStations(radios);
       });
@@ -88,7 +95,9 @@ const Radio: React.FC = () => {
   return (
     <div style={radioStyles}>
       <div style={headStyle}>
+        <IconClickable icon="back" />
         <h3>Stations</h3>
+        <IconClickable icon="power" />
       </div>
       {hasLoaded}
       <div style={footStyle}>{nowPlayingDisplay}</div>
