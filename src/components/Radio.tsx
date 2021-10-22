@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { RadioStation } from "../types/types";
+import { RadioStation, LookUp } from "../types/types";
 import StationsDisplay from "./StationsDisplay";
 import axios from "axios";
 import CSS from "csstype";
@@ -36,10 +36,19 @@ const footStyle: CSS.Properties = {
   borderTop: "solid grey 1px",
 };
 
-const nowPlayingTextStyle: CSS.Properties ={
-    fontSize:"0.5em",
-    color:"rgb(258,178,102)"
-}
+const nowPlayingTextStyle: CSS.Properties = {
+  fontSize: "0.5em",
+  color: "rgb(258,178,102)",
+};
+
+
+
+const dummyColors : LookUp = {
+  "Radio 1": "91bd0f",
+  "Radio 2": "0f6fbd",
+  "Radio 3": "bd0f32",
+  "Radio 4": "ff491c",
+};
 
 const Radio: React.FC = () => {
   useEffect(() => {
@@ -47,8 +56,8 @@ const Radio: React.FC = () => {
       .get<IResponseData>("https://teclead.de/recruiting/radios")
       .then((response) => {
         let radios = response.data.radios;
-        for(let radio of radios){
-            radio.image = `https://dummyimage.com/400x400/3d43ff/ffffff&text=${radio.name}`
+        for (let radio of radios) {
+          radio.image = `https://dummyimage.com/400x400/${dummyColors[radio.name]}/ffffff&text=${radio.name}`;
         }
         setStations(radios);
       });
@@ -59,7 +68,11 @@ const Radio: React.FC = () => {
     setNowPlaying(station);
   };
   let hasLoaded = stations ? (
-    <StationsDisplay nowPlaying={nowPlaying} upDateNowPlaying={upDateNowPlaying} stations={stations} />
+    <StationsDisplay
+      nowPlaying={nowPlaying}
+      upDateNowPlaying={upDateNowPlaying}
+      stations={stations}
+    />
   ) : (
     <></>
   );

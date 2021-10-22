@@ -3,4 +3,8 @@ export type RadioStation = {
     frequency: number;
     image: string;
   };
+
+  export type LookUp = {
+    [key:string]:string
+  }
   
