@@ -1,35 +1,35 @@
 import React from "react";
 import { RadioStation } from "../types/types";
 import IconClickable from "./IconClickable";
-import CSS from "csstype";
+import styled from "styled-components";
 
-const stationClickableStyle: CSS.Properties = {
-  width: "90%",
-  borderBottom: "solid 1px grey",
-};
+const StyledStationClickable = styled.div`
+  width: 90%;
+  border-bottom: solid 1px grey;
+`;
 
-const clickableAreaStyle: CSS.Properties = {
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  alignItems: "center",
-  paddingTop: "15px",
-  paddingBottom: "15px",
-};
+const ClickableArea = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+`;
 
-const highlightedImgStyle: CSS.Properties = {
-  height: "80px",
-  borderRadius: "50%",
-  border: "solid white 1px",
-};
+const HighlightedImage = styled.img`
+  height: 80px;
+  border-radius: 50%;
+  border: solid white 1px;
+`;
 
-const highlightedDisplayStyle: CSS.Properties = {
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-around",
-  alignItems: "center",
-  paddingTop: "7px",
-};
+const HighlightedDisplay = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 7px;
+`;
 
 interface IStationClickable {
   station: RadioStation;
@@ -44,36 +44,29 @@ const StationClickable: React.FC<IStationClickable> = (props) => {
 
   let highlightedDisplay =
     props.nowPlaying && props.station.name === props.nowPlaying.name ? (
-      <div style={highlightedDisplayStyle}>
+      <HighlightedDisplay>
         <IconClickable
           func={() => props.upDateNowPlaying(props.station, -1)}
           icon="back"
         />
-        <img
-          style={highlightedImgStyle}
-          src={props.station.image}
-          alt={props.station.name}
-        />
+        <HighlightedImage src={props.station.image} alt={props.station.name} />
         <IconClickable
           func={() => props.upDateNowPlaying(props.station, 1)}
           icon="forward"
         />
-      </div>
+      </HighlightedDisplay>
     ) : (
       <></>
     );
 
   return (
-    <div style={stationClickableStyle}>
+    <StyledStationClickable>
       {highlightedDisplay}
-      <div
-        onClick={() => clickHandler(props.station)}
-        style={clickableAreaStyle}
-      >
+      <ClickableArea onClick={() => clickHandler(props.station)}>
         <div>{props.station.name}</div>
         <div>{props.station.frequency}</div>
-      </div>
-    </div>
+      </ClickableArea>
+    </StyledStationClickable>
   );
 };
 
