@@ -74,12 +74,17 @@ const Radio: React.FC = () => {
   const [stationHistory, setStationHistory] = useState<Array<RadioStation>>();
   const [nowPlaying, setNowPlaying] = useState<RadioStation>();
   const upDateNowPlaying = (station: RadioStation, incOrDec?: -1 | 1) => {
-    console.log(incOrDec,nowPlaying)
+    console.log(incOrDec, nowPlaying);
     let newStation = station;
-    if(incOrDec){
-      newStation = stations![stations!.indexOf(newStation) + incOrDec]
+    let shouldUpdateHistory = true;
+    if (incOrDec) {
+      if (stations![stations!.indexOf(newStation) + incOrDec]) {
+        newStation = stations![stations!.indexOf(newStation) + incOrDec];
+      } else {
+        shouldUpdateHistory = false;
+      }
     }
-    updateHistory(newStation);
+    shouldUpdateHistory && updateHistory(newStation);
     setNowPlaying(newStation);
     console.log(stationHistory);
   };
@@ -102,13 +107,15 @@ const Radio: React.FC = () => {
       let currentHistory = stationHistory;
       currentHistory.pop();
       setStationHistory(currentHistory);
-      setNowPlaying(currentHistory[currentHistory.length - 1]);
+      if (currentHistory[currentHistory.length - 1]) {
+        setNowPlaying(currentHistory[currentHistory.length - 1]);
+      }
     }
   };
   const turnOff = () => {
     setNowPlaying(undefined);
   };
-  
+
   let hasLoaded = stations ? (
     <StationsDisplay
       nowPlaying={nowPlaying}
