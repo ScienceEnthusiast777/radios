@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { RadioStation, LookUp } from "../types/types";
 import StationsDisplay from "./StationsDisplay";
 import IconClickable from "./IconClickable";
+import ScrollingText from "../styled/scrollingText";
 import axios from "axios";
 import useScript from "../hooks/useScript";
 import styled from "styled-components";
@@ -47,40 +48,9 @@ const NowPlaying = styled.div`
   color: rgb(258, 178, 102);
 `;
 
-const ScrollingText = styled.p`
+const StyledScrollingText = styled(ScrollingText)`
   font-size: 0.5em;
   color: rgb(258, 178, 102);
-
--moz-transform: translateX(100%);
--webkit-transform: translateX(100%);
-transform: translateX(100%);
-
--moz-animation: my-animation 15s linear infinite;
--webkit-animation: my-animation 15s linear infinite;
-animation: my-animation 15s linear infinite;
-}
-
-@-moz-keyframes my-animation {
-from { -moz-transform: translateX(100%); }
-to { -moz-transform: translateX(-100%); }
-}
-
-@-webkit-keyframes my-animation {
-from { -webkit-transform: translateX(100%); }
-to { -webkit-transform: translateX(-100%); }
-}
-
-@keyframes my-animation {
-from {
-  -moz-transform: translateX(100%);
-  -webkit-transform: translateX(100%);
-  transform: translateX(100%);
-}
-to {
-  -moz-transform: translateX(-100%);
-  -webkit-transform: translateX(-100%);
-  transform: translateX(-100%);
-}
 `;
 
 const dummySongs: LookUp = {
@@ -168,7 +138,7 @@ const Radio: React.FC = () => {
     <>
       <NowPlaying>CURRENTLY PLAYING</NowPlaying>
       <div>{nowPlaying.name}</div>
-      <ScrollingText>{dummySongs[nowPlaying.name]}</ScrollingText>
+      <StyledScrollingText>{dummySongs[nowPlaying.name]}</StyledScrollingText>
     </>
   ) : (
     <></>
