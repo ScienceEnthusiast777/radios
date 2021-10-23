@@ -4,7 +4,6 @@ import StationsDisplay from "./StationsDisplay";
 import IconClickable from "./IconClickable";
 import axios from "axios";
 import useScript from "../hooks/useScript";
-// import CSS from "csstype";
 import styled from "styled-components";
 
 interface IResponseData {
@@ -22,22 +21,8 @@ const StyledRadio = styled.div`
   width: 300px;
   height: 400px;
   box-shadow: 0px 5px 30px black;
-  over-flow: hidden;
+  overflow: hidden;
 `;
-
-// const radioStyles: CSS.Properties = {
-//   color: "white",
-//   fontWeight: "lighter",
-//   backgroundColor: "rgb(42,42,63)",
-//   borderRadius: "20px",
-//   display: "flex",
-//   flexDirection: "column",
-//   justifyContent: "space-between",
-//   width: "300px",
-//   height: "400px",
-//   boxShadow: "0px 5px 30px black",
-//   overflow: "hidden",
-// };
 
 const Head = styled.div`
   display: flex;
@@ -48,15 +33,6 @@ const Head = styled.div`
   height: 15%;
 `;
 
-// const headStyle: CSS.Properties = {
-//   display: "flex",
-//   flexDirection: "row",
-//   justifyContent: "space-around",
-//   alignItems: "center",
-//   backgroundColor: "rgb(258,178,102)",
-//   height: "15%",
-// };
-
 const Foot = styled.div`
   background-color: rgb(42, 42, 63);
   display: flex;
@@ -66,24 +42,53 @@ const Foot = styled.div`
   border-top: "solid grey 1px";
 `;
 
-// const footStyle: CSS.Properties = {
-//   backgroundColor: "rgb(42,42,63)",
-//   display: "flex",
-//   flexDirection: "column",
-//   justifyContent: "center",
-//   height: "15%",
-//   borderTop: "solid grey 1px",
-// };
-
 const NowPlaying = styled.div`
-  font-size: 0.5em;
+  font-size: 0.6em;
   color: rgb(258, 178, 102);
 `;
 
-// const nowPlayingTextStyle: CSS.Properties = {
-//   fontSize: "0.5em",
-//   color: "rgb(258,178,102)",
-// };
+const ScrollingText = styled.p`
+  font-size: 0.5em;
+  color: rgb(258, 178, 102);
+
+-moz-transform: translateX(100%);
+-webkit-transform: translateX(100%);
+transform: translateX(100%);
+
+-moz-animation: my-animation 15s linear infinite;
+-webkit-animation: my-animation 15s linear infinite;
+animation: my-animation 15s linear infinite;
+}
+
+@-moz-keyframes my-animation {
+from { -moz-transform: translateX(100%); }
+to { -moz-transform: translateX(-100%); }
+}
+
+@-webkit-keyframes my-animation {
+from { -webkit-transform: translateX(100%); }
+to { -webkit-transform: translateX(-100%); }
+}
+
+@keyframes my-animation {
+from {
+  -moz-transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+}
+to {
+  -moz-transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+`;
+
+const dummySongs: LookUp = {
+  "Radio 1": "Wonderwall - Oasis",
+  "Radio 2": "Blue Flowers - Kool Keith",
+  "Radio 3": "O mio babbino caro - Puccini",
+  "Radio 4": "Magic and Music - Max Roach",
+};
 
 const dummyColors: LookUp = {
   "Radio 1": "91bd0f",
@@ -163,9 +168,10 @@ const Radio: React.FC = () => {
     <>
       <NowPlaying>CURRENTLY PLAYING</NowPlaying>
       <div>{nowPlaying.name}</div>
+      <ScrollingText>{dummySongs[nowPlaying.name]}</ScrollingText>
     </>
   ) : (
-    <div></div>
+    <></>
   );
 
   return (
