@@ -1,6 +1,6 @@
 import React from "react";
 import Radio from "./components/Radio";
-import CSS from "csstype";
+// import CSS from "csstype";
 import styled from "styled-components";
 
 const StyledApp = styled.div`

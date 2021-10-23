@@ -4,48 +4,86 @@ import StationsDisplay from "./StationsDisplay";
 import IconClickable from "./IconClickable";
 import axios from "axios";
 import useScript from "../hooks/useScript";
-import CSS from "csstype";
+// import CSS from "csstype";
+import styled from "styled-components";
 
 interface IResponseData {
   radios: Array<RadioStation>;
 }
 
-const radioStyles: CSS.Properties = {
-  color: "white",
-  fontWeight: "lighter",
-  backgroundColor: "rgb(42,42,63)",
-  borderRadius: "20px",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-  width: "300px",
-  height: "400px",
-  boxShadow: "0px 5px 30px black",
-  overflow: "hidden",
-};
+const StyledRadio = styled.div`
+  color: white;
+  font-weight: lighter;
+  background-color: rgb(42, 42, 63);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 300px;
+  height: 400px;
+  box-shadow: 0px 5px 30px black;
+  over-flow: hidden;
+`;
 
-const headStyle: CSS.Properties = {
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-around",
-  alignItems: "center",
-  backgroundColor: "rgb(258,178,102)",
-  height: "15%",
-};
+// const radioStyles: CSS.Properties = {
+//   color: "white",
+//   fontWeight: "lighter",
+//   backgroundColor: "rgb(42,42,63)",
+//   borderRadius: "20px",
+//   display: "flex",
+//   flexDirection: "column",
+//   justifyContent: "space-between",
+//   width: "300px",
+//   height: "400px",
+//   boxShadow: "0px 5px 30px black",
+//   overflow: "hidden",
+// };
 
-const footStyle: CSS.Properties = {
-  backgroundColor: "rgb(42,42,63)",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  height: "15%",
-  borderTop: "solid grey 1px",
-};
+const Head = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgb(258, 178, 102);
+  height: 15%;
+`;
 
-const nowPlayingTextStyle: CSS.Properties = {
-  fontSize: "0.5em",
-  color: "rgb(258,178,102)",
-};
+// const headStyle: CSS.Properties = {
+//   display: "flex",
+//   flexDirection: "row",
+//   justifyContent: "space-around",
+//   alignItems: "center",
+//   backgroundColor: "rgb(258,178,102)",
+//   height: "15%",
+// };
+
+const Foot = styled.div`
+  background-color: rgb(42, 42, 63);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 15%;
+  border-top: "solid grey 1px";
+`;
+
+// const footStyle: CSS.Properties = {
+//   backgroundColor: "rgb(42,42,63)",
+//   display: "flex",
+//   flexDirection: "column",
+//   justifyContent: "center",
+//   height: "15%",
+//   borderTop: "solid grey 1px",
+// };
+
+const NowPlaying = styled.div`
+  font-size: 0.5em;
+  color: rgb(258, 178, 102);
+`;
+
+// const nowPlayingTextStyle: CSS.Properties = {
+//   fontSize: "0.5em",
+//   color: "rgb(258,178,102)",
+// };
 
 const dummyColors: LookUp = {
   "Radio 1": "91bd0f",
@@ -123,7 +161,7 @@ const Radio: React.FC = () => {
   );
   let nowPlayingDisplay = nowPlaying ? (
     <>
-      <div style={nowPlayingTextStyle}>CURRENTLY PLAYING</div>
+      <NowPlaying>CURRENTLY PLAYING</NowPlaying>
       <div>{nowPlaying.name}</div>
     </>
   ) : (
@@ -131,15 +169,15 @@ const Radio: React.FC = () => {
   );
 
   return (
-    <div style={radioStyles}>
-      <div style={headStyle}>
+    <StyledRadio>
+      <Head>
         <IconClickable func={goBack} icon="backChevron" />
         <h3>Stations</h3>
         <IconClickable func={turnOff} icon="power" />
-      </div>
+      </Head>
       {hasLoaded}
-      <div style={footStyle}>{nowPlayingDisplay}</div>
-    </div>
+      <Foot>{nowPlayingDisplay}</Foot>
+    </StyledRadio>
   );
 };
 
