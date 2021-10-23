@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import Radio from "./components/Radio"
 import CSS from "csstype"
 

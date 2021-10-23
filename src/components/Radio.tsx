@@ -57,7 +57,6 @@ const dummyColors: LookUp = {
 const Radio: React.FC = () => {
   useScript("https://kit.fontawesome.com/ddeb8cf297.js");
   useEffect(() => {
-    console.log("fetched");
     axios
       .get<IResponseData>("https://teclead.de/recruiting/radios")
       .then((response) => {
@@ -74,7 +73,6 @@ const Radio: React.FC = () => {
   const [stationHistory, setStationHistory] = useState<Array<RadioStation>>();
   const [nowPlaying, setNowPlaying] = useState<RadioStation>();
   const upDateNowPlaying = (station: RadioStation, incOrDec?: -1 | 1) => {
-    console.log(incOrDec, nowPlaying);
     let newStation = station;
     let shouldUpdateHistory = true;
     if (incOrDec) {
@@ -86,7 +84,6 @@ const Radio: React.FC = () => {
     }
     shouldUpdateHistory && updateHistory(newStation);
     setNowPlaying(newStation);
-    console.log(stationHistory);
   };
 
   const updateHistory = (station: RadioStation) => {
@@ -102,7 +99,6 @@ const Radio: React.FC = () => {
     }
   };
   const goBack = () => {
-    console.log("click");
     if (stationHistory) {
       let currentHistory = stationHistory;
       currentHistory.pop();
