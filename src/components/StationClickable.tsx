@@ -45,13 +45,13 @@ const StationClickable: React.FC<IStationClickable> = (props) => {
   let highlightedDisplay =
     props.nowPlaying && props.station.name === props.nowPlaying.name ? (
       <div style={highlightedDisplayStyle}>
-        <IconClickable icon="back" />
+        {/* <IconClickable icon="back" /> */}
         <img
           style={highlightedImgStyle}
           src={props.station.image}
           alt={props.station.name}
         />
-        <IconClickable icon="forward" />
+        {/* <IconClickable icon="forward" /> */}
       </div>
     ) : (
       <></>

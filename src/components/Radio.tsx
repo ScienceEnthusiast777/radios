@@ -57,6 +57,7 @@ const dummyColors: LookUp = {
 const Radio: React.FC = () => {
   useScript("https://kit.fontawesome.com/ddeb8cf297.js");
   useEffect(() => {
+    console.log("fetched");
     axios
       .get<IResponseData>("https://teclead.de/recruiting/radios")
       .then((response) => {
@@ -68,11 +69,35 @@ const Radio: React.FC = () => {
         }
         setStations(radios);
       });
-  });
+  }, []);
   const [stations, setStations] = useState<Array<RadioStation>>();
+  const [stationHistory, setStationHistory] = useState<Array<RadioStation>>();
   const [nowPlaying, setNowPlaying] = useState<RadioStation>();
   const upDateNowPlaying = (station: RadioStation) => {
+    updateHistory(station);
     setNowPlaying(station);
+    console.log(stationHistory)
+  };
+  const updateHistory = (station: RadioStation) => {
+    if (stationHistory) {
+      let currentHistory = stationHistory;
+      currentHistory.push(station);
+      if (currentHistory.length > 10) {
+        currentHistory.shift();
+      }
+      setStationHistory(currentHistory);
+    } else {
+      setStationHistory([station]);
+    }
+  };
+  const goBack = () => {
+    console.log('click')
+    if (stationHistory) {
+      let currentHistory = stationHistory;
+      currentHistory.pop();
+      setStationHistory(currentHistory)
+      setNowPlaying(currentHistory[currentHistory.length-1])
+    }
   };
   let hasLoaded = stations ? (
     <StationsDisplay
@@ -95,9 +120,9 @@ const Radio: React.FC = () => {
   return (
     <div style={radioStyles}>
       <div style={headStyle}>
-        <IconClickable icon="back" />
+        <IconClickable func={goBack} icon="backChevron" />
         <h3>Stations</h3>
-        <IconClickable icon="power" />
+        {/* <IconClickable icon="power" /> */}
       </div>
       {hasLoaded}
       <div style={footStyle}>{nowPlayingDisplay}</div>
