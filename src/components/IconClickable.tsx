@@ -3,7 +3,7 @@ import { LookUp } from "../types/types";
 
 interface IIconClickable {
   icon: "back" | "forward" | "power" | "backChevron";
-  func: (args?: any[]) => any;
+  func: (args?: any[]) => void;
 }
 
 const iconClickable: LookUp = {

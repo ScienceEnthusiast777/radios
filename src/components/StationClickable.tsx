@@ -33,7 +33,7 @@ const highlightedDisplayStyle: CSS.Properties = {
 
 interface IStationClickable {
   station: RadioStation;
-  upDateNowPlaying: (station: RadioStation) => void;
+  upDateNowPlaying: (station: RadioStation, incOrDec?: -1 | 1) => void;
   nowPlaying: RadioStation | undefined;
 }
 
@@ -45,13 +45,19 @@ const StationClickable: React.FC<IStationClickable> = (props) => {
   let highlightedDisplay =
     props.nowPlaying && props.station.name === props.nowPlaying.name ? (
       <div style={highlightedDisplayStyle}>
-        {/* <IconClickable icon="back" /> */}
+        <IconClickable
+          func={() => props.upDateNowPlaying(props.station, -1)}
+          icon="back"
+        />
         <img
           style={highlightedImgStyle}
           src={props.station.image}
           alt={props.station.name}
         />
-        {/* <IconClickable icon="forward" /> */}
+        <IconClickable
+          func={() => props.upDateNowPlaying(props.station, 1)}
+          icon="forward"
+        />
       </div>
     ) : (
       <></>

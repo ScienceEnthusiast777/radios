@@ -73,11 +73,17 @@ const Radio: React.FC = () => {
   const [stations, setStations] = useState<Array<RadioStation>>();
   const [stationHistory, setStationHistory] = useState<Array<RadioStation>>();
   const [nowPlaying, setNowPlaying] = useState<RadioStation>();
-  const upDateNowPlaying = (station: RadioStation) => {
-    updateHistory(station);
-    setNowPlaying(station);
-    console.log(stationHistory)
+  const upDateNowPlaying = (station: RadioStation, incOrDec?: -1 | 1) => {
+    console.log(incOrDec,nowPlaying)
+    let newStation = station;
+    if(incOrDec){
+      newStation = stations![stations!.indexOf(newStation) + incOrDec]
+    }
+    updateHistory(newStation);
+    setNowPlaying(newStation);
+    console.log(stationHistory);
   };
+
   const updateHistory = (station: RadioStation) => {
     if (stationHistory) {
       let currentHistory = stationHistory;
@@ -91,14 +97,18 @@ const Radio: React.FC = () => {
     }
   };
   const goBack = () => {
-    console.log('click')
+    console.log("click");
     if (stationHistory) {
       let currentHistory = stationHistory;
       currentHistory.pop();
-      setStationHistory(currentHistory)
-      setNowPlaying(currentHistory[currentHistory.length-1])
+      setStationHistory(currentHistory);
+      setNowPlaying(currentHistory[currentHistory.length - 1]);
     }
   };
+  const turnOff = () => {
+    setNowPlaying(undefined);
+  };
+  
   let hasLoaded = stations ? (
     <StationsDisplay
       nowPlaying={nowPlaying}
@@ -122,7 +132,7 @@ const Radio: React.FC = () => {
       <div style={headStyle}>
         <IconClickable func={goBack} icon="backChevron" />
         <h3>Stations</h3>
-        {/* <IconClickable icon="power" /> */}
+        <IconClickable func={turnOff} icon="power" />
       </div>
       {hasLoaded}
       <div style={footStyle}>{nowPlayingDisplay}</div>
