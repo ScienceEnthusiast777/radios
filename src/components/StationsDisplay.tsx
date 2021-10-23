@@ -1,19 +1,31 @@
 import React from "react";
 import { RadioStation } from "../types/types";
 import StationClickable from "./StationClickable";
-import CSS from "csstype";
+import styled from "styled-components";
 
-const stationDisplayStyle: CSS.Properties = {
-  height: "70%",
-  backgroundColor: "rgb(58,58,77)",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  overflowX: "hidden",
-  msOverflowY: "auto",
-  scrollbarWidth: "none",
-  msOverflowStyle: "none",
-};
+// import CSS from "csstype";
+
+const StyledStationDisplay = styled.div`
+height: 70%;
+  background-color: rgb(58,58,77);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  `
+
+// const stationDisplayStyle: CSS.Properties = {
+//   height: "70%",
+//   backgroundColor: "rgb(58,58,77)",
+//   display: "flex",
+//   flexDirection: "column",
+//   alignItems: "center",
+//   overflowX: "hidden",
+//   msOverflowY: "auto",
+//   scrollbarWidth: "none",
+//   msOverflowStyle: "none",
+// };
 
 interface IStationDisplayProps {
   stations: Array<RadioStation>;
@@ -23,7 +35,7 @@ interface IStationDisplayProps {
 
 const StationDisplay: React.FC<IStationDisplayProps> = (props) => {
   return (
-    <div style={stationDisplayStyle}>
+    <StyledStationDisplay>
       {props.stations.map((e, i) => {
         return (
           <StationClickable
@@ -34,7 +46,7 @@ const StationDisplay: React.FC<IStationDisplayProps> = (props) => {
           />
         );
       })}
-    </div>
+    </StyledStationDisplay>
   );
 };
 
